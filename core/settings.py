@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "teak_admin",
     "product",
     "django_cleanup.apps.CleanupConfig",
+    "drf_yasg"
 ]
 
 
