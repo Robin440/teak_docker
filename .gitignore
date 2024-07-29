@@ -1,8 +1,7 @@
 env/
-requirements.txt
 logs
 product_images
 product_videos
 banner_images
 category_images
-teak_env
+teakenv
