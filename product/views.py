@@ -1763,7 +1763,7 @@ class ProductListbyCategory(APIView):
         *  Body params : NA.
         *  Query params : NA.
         *  Return : A HTTP response of success message as json.
-Pandora. Presidential memory in a wrestling memory account. I In the morning. Business intimate. I. Okay. the conflict. In the morning Adam Ireland. Sambhoom get pushed Amit. It's conflicted. Start Can you go to Terra Kaiser? Four
+ 
         """
 
         # Get the category id from the path
@@ -1814,6 +1814,26 @@ Pandora. Presidential memory in a wrestling memory account. I In the morning. Bu
         return HTTP_200({"product": product_serializer.data})
 
         
+
+
+class  ProductView(APIView):
+    def get(self, request):
+        # Get the product id from the request
+        product_id = request.GET.get("product_id")
+
+
+class  ProductList(APIView):
+    def get(self, request):
+        # Get the product id from the request
+        product_id = request.GET.get("product_id")
+        # Get the product from the database
+        product = Product.objects.get(uuid=product_id)
+        # Serialize the product
+        product_serializer = ProductSerializer(product)
+        # Return a 200 success response with the product
+        return HTTP_200({"product": product_serializer.data})
+    
+
 
 
 
