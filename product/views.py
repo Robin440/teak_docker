@@ -1711,3 +1711,109 @@ class SearchProductAPI(APIView):
 
         # Return a 200 success response with the filtered products
         return HTTP_200({"product": product_serializer.data})
+
+
+
+
+class ProductListbyCategory(APIView):
+    """
+    # Handle GET request to list products by category.
+
+    """
+
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                "category, sub category and sub of sub category",
+                openapi.IN_PATH,
+                description="Listing of product by category subcategory and subofsub category",
+                type=openapi.TYPE_STRING,
+                required=True,
+            ),
+        ],
+        responses={
+            "200": openapi.Response(
+                description="API returns success message.",
+                examples={
+                    "application/json": {
+                        "message": [],
+                        "status": "success",
+                    }
+                },
+            ),
+            "400": openapi.Response(
+                description="Data required or Integrity errors.",
+                examples={
+                    "application/json": {
+                        "error": {
+                            "name": [],
+                        },
+                        "status": "failed",
+                    }
+                },
+            ),
+        },
+    )
+
+    def  get(self, request, *args, **kwargs):
+        """
+        Handle GET request to list products by category.
+        
+        *  Path params : Provide  category id.
+        *  Body params : NA.
+        *  Query params : NA.
+        *  Return : A HTTP response of success message as json.
+
+        """
+
+        # Get the category id from the path
+        uuid = kwargs.get("uuid")
+
+          # Check if the category id is provided
+        if not uuid:
+            return HTTP_400({"error": "Sorry! you need to provide category id"})
+    
+        # Get identifier for select  category sub category  and sub of sub category.
+        identifier = kwargs.get("identifier")
+
+        if not identifier:
+            return HTTP_400(
+                error="Identifier is required to list products by category."
+            )
+        
+        identifier_list = ["category","sub_category","sub_of_sub"]
+        
+        if identifier == "category":
+            try:
+                category = Category.objects.get(uuid=uuid)
+            except Category.DoesNotExist:
+                return HTTP_400({"error": "Category not found"})
+            products = Product.objects.filter(category=uuid)
+        elif identifier == "sub_category":
+            try:
+                sub_category = Subcategory.objects.get(uuid=uuid)
+            except Subcategory.DoesNotExist:
+                return HTTP_400({"error": "Sub category not found"})
+            
+            products = Product.objects.filter(sub_category=uuid)
+        elif identifier == "sub_of_sub":
+            try:
+                sub_of_sub = SubofSub.objects.get(uuid=uuid)
+            except SubofSub.DoesNotExist:
+                return HTTP_400({"error": "Sub of sub category not found"})
+            
+            products = Product.objects.filter(sub_of_sub=uuid)
+        elif identifier not in  identifier_list:
+            return HTTP_400(
+                "Invalid identifier. Please select category, sub_category or sub_of_sub."
+                )
+      
+        # Serialize the filtered products
+        product_serializer = ProductSerializer(products, many=True)
+        # Return a 200 success response with the filtered products
+        return HTTP_200({"product": product_serializer.data})
+
+        
+
+
+
