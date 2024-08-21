@@ -1763,7 +1763,7 @@ class ProductListbyCategory(APIView):
         *  Body params : NA.
         *  Query params : NA.
         *  Return : A HTTP response of success message as json.
-
+Pandora. Presidential memory in a wrestling memory account. I In the morning. Business intimate. I. Okay. the conflict. In the morning Adam Ireland. Sambhoom get pushed Amit. It's conflicted. Start Can you go to Terra Kaiser? Four
         """
 
         # Get the category id from the path
