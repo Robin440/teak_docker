@@ -71,6 +71,10 @@ urlpatterns = [
     path(
         "api/search/", SearchProductAPI.as_view(), name="search-product"
     ),
+    # product listing by category , subcategory and  sub of sub.
+    path(
+        "api/product-listing/<uuid:uuid>/<str:identifier>/", ProductListbyCategory.as_view(), name="product-listing"
+        ),
 
 
      re_path(
