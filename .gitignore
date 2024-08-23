@@ -6,4 +6,6 @@ banner_images
 category_images
 teakenv
 db-data
+db
+pg_stat_tmp
 .pyc
