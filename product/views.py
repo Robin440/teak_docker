@@ -1826,4 +1826,6 @@ class SubCategorybyCategory(APIView):
             return HTTP_400({"error": "Category not found"})
         
         # sub_category = Subcategory.f
+        sub_categories = Subcategory.objects.filter(category=category)
+       
 
