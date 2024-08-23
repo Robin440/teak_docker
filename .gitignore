@@ -9,5 +9,5 @@ db-data
 db-data/
 __pycache__/
 *.pyc
-
+.pyc
 
