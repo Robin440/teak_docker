@@ -57,19 +57,49 @@ To get started with the Teakwood Factory application, follow these steps:
 
    Inside the Docker container, run the following command to apply database migrations:
    ```bash
-   docker-compose exec web python manage.py migrate
+   docker compose exec -it tdango bash
+   python manage.py migrate
    ```
 ### Create a Superuser
 
 ### Create an admin user to access the Django admin interface:
 
    ```bash
-   docker-compose exec web python manage.py createsuperuser
+   docker-compose exec -it tdango bash
+   python manage.py createsuperuser
    ```
 
 ### Access the Admin Interface
 
    Open your web browser and go to  ```http://localhost:8000/admin``` to access the Django admin interface. Use the superuser credentials you created to log in.
+
+
+### API Endpoints
+   The application provides several API endpoints to interact with the models. The endpoints are designed using Django REST Framework and are available for CRUD operations on products, categories, subcategories, and banners.
+
+   Refer to the API Documentation for detailed information on available endpoints and usage examples.
+
+### Contributing
+   If you want to contribute to the development of Teakwood Factory, please follow these steps:
+
+   - **Fork the repository.**
+   - **Create a new branch: git checkout -b feature/YourFeatureName.***
+   - **Make your changes and commit them: git commit -m 'Add some feature'.**
+   - **Push to the branch: git push origin feature/YourFeatureName.**
+   - **Submit a pull request.**
+
+### License
+   This project is licensed under the MIT License. See the LICENSE file for more details.
+
+### Acknowledgements
+   - **Django**
+   - **Django REST Framework**
+   - **Docker**
+   - **Faker**
+
+Thank you for using Teakwood Factory! We hope this application helps you manage your teakwood business efficiently.
+
+Feel free to adjust this `README.md` according to the specific details and requirements of your project.
 
 
 
