@@ -71,7 +71,7 @@ To get started with the Teakwood Factory application, follow these steps:
 
 ### Access the Admin Interface
 
-   Open your web browser and go to  ```http://localhost:8000/admin``` to access the Django admin interface. Use the superuser credentials you created to log in.
+   Open your web browser and go to  ```http://localhost:8009/admin``` to access the Django admin interface. Use the superuser credentials you created to log in.
 
 
 ### API Endpoints
