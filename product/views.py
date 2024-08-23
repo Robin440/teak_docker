@@ -1792,17 +1792,17 @@ class ProductListbyCategory(APIView):
         elif identifier == "sub_category":
             try:
                 sub_category = Subcategory.objects.get(uuid=uuid)
-            except Subcategory.DoesNotExist:
+            except Subcategory.DoesNotExist:    
                 return HTTP_400({"error": "Sub category not found"})
             
-            products = Product.objects.filter(sub_category=uuid)
+            products = Product.objects.filter(category=sub_category.category)
         elif identifier == "sub_of_sub":
             try:
                 sub_of_sub = SubofSub.objects.get(uuid=uuid)
             except SubofSub.DoesNotExist:
                 return HTTP_400({"error": "Sub of sub category not found"})
             
-            products = Product.objects.filter(sub_of_sub=uuid)
+            products = Product.objects.filter(category=sub_of_sub.sub_category.category)
         elif identifier not in  identifier_list:
             return HTTP_400(
                 "Invalid identifier. Please select category, sub_category or sub_of_sub."
@@ -1815,5 +1815,15 @@ class ProductListbyCategory(APIView):
 
         
 
-
+class SubCategorybyCategory(APIView):
+    def get(self, request, *args, **kwargs):
+        # Check if the category id is provided
+        if not kwargs.get("category_id"):
+            return HTTP_400({"error": "Sorry! you need to provide category id"})
+        try:
+            category = Category.objects.get(uuid=kwargs["category_id"])
+        except Category.DoesNotExist:
+            return HTTP_400({"error": "Category not found"})
+        
+        # sub_category = Subcategory.f
 
