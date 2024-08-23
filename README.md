@@ -43,5 +43,34 @@ To get started with the Teakwood Factory application, follow these steps:
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/yourusername/teakwood-factory.git
+   https://github.com/Robin440/teak_docker.git
    cd teakwood-factory
+   ```
+
+### Build and Run the Docker Containers
+   ```bash
+   docker-compose up --build
+   ```
+   This command will build the Docker containers and start the application.
+
+### Run Migrations
+
+   Inside the Docker container, run the following command to apply database migrations:
+   ```bash
+   docker-compose exec web python manage.py migrate
+   ```
+### Create a Superuser
+
+### Create an admin user to access the Django admin interface:
+
+   ```bash
+   docker-compose exec web python manage.py createsuperuser
+   ```
+
+### Access the Admin Interface
+
+   Open your web browser and go to  ```http://localhost:8000/admin``` to access the Django admin interface. Use the superuser credentials you created to log in.
+
+
+
+
