@@ -17,7 +17,7 @@ class SubCategorySerializers(serializers.ModelSerializer):
     class Meta:
         """meta class"""
         model = Subcategory
-        # fields = "__all__"
+        fields = "__all__"
         exclude = ['uuid']
         
 
@@ -27,7 +27,7 @@ class SubofSubSerializers(serializers.ModelSerializer):
     class Meta:
         """meta class"""
         model = SubofSub
-        # fields = "__all__"
+        fields = "__all__"
         exclude = ['uuid']
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -36,7 +36,7 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         """meta class"""
         model = Product
-        # fields = "__all__"
+        fields = "__all__"
         exclude = ['uuid']
 
         

@@ -25,3 +25,9 @@ __pycache__/
 .pyo
 .pyd
 .pyd
+
+
+
+
+.cypython
+.pyc
