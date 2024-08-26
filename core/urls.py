@@ -75,7 +75,16 @@ urlpatterns = [
     path(
         "api/product-listing/<uuid:uuid>/<str:identifier>/", ProductListbyCategory.as_view(), name="product-listing"
         ),
+    path(
+        "api/sub-category/category/<uuid:category_id>/",ListSubCategoryUnderCategory.as_view(),name='SUB'
+    ),
 
+     path(
+        "api/sub-of-sub/sub-category/<uuid:sub_category_id>/",ListSubofSubUnderSubCategory.as_view(),name=''
+    ),
+    path(
+        "api/products/category/",ProductsbyMultipleSelection.as_view(),name=""
+    ),
 
      re_path(
         r"^redoc/$", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"

@@ -1829,3 +1829,79 @@ class SubCategorybyCategory(APIView):
         sub_categories = Subcategory.objects.filter(category=category)
        
 
+
+class ListSubCategoryUnderCategory(APIView):
+    def get(self, request, *args, **kwargs):
+        # Check if the category id is provided
+        if not kwargs.get("category_id"):
+            return HTTP_400({"error": "Sorry! you need to provide category id"})
+        
+        sub_category = Subcategory.objects.filter(category=kwargs.get("category_id"))
+        if not sub_category:
+            return HTTP_400({"error": "Sub category not found"})
+        sub_category = SubCategorySerializers(sub_category,many=True)
+        return HTTP_200({"sub_category": sub_category.data})
+    
+
+class ListSubofSubUnderSubCategory(APIView):
+    def get(self, request, *args, **kwargs):
+        # Check if the category id is provided
+        if not kwargs.get("sub_category_id"):
+            return HTTP_400({"error": "Sorry! you need to providensub category id"})
+        
+        sub_of_sub = SubofSub.objects.filter(sub_category=kwargs.get("sub_category_id"))
+        if not sub_of_sub:
+            return HTTP_400({"error": "Sub category not found"})
+        sub_of_sub = SubofSubSerializers(sub_of_sub,many=True)
+        return HTTP_200({"sub_of_sub": sub_of_sub.data})
+
+
+
+class ProductsbyMultipleSelection(APIView):
+    def get(self, request, *args, **kwargs):
+        # Extract parameters from request body
+        category_uuids = request.data.get('category', [])
+        sub_category_uuids = request.data.get('sub_category', [])
+        print(f"sub_{sub_category_uuids}++++++++++++++++")
+        sub_of_sub_uuids = request.data.get('sub_of_sub', [])
+
+        if  not category_uuids and not sub_category_uuids and not sub_of_sub_uuids:
+            return HTTP_400({"error": "Sorry! you need to provide list of uuids"})
+        # Fetch products by category UUIDs
+        if category_uuids:
+            try:
+                categories = Category.objects.filter(uuid__in=category_uuids)
+            except Category.DoesNotExist:
+                return HTTP_400({"error": "Category not found"})
+            try:
+                products = Product.objects.filter(category__in=categories)
+            except Product.DoesNotExist:
+                return HTTP_400({"error": "Products not found"})
+        elif  sub_category_uuids:
+            try:
+                print("_______________________________________________")
+                sub_categories = Subcategory.objects.filter(uuid__in=sub_category_uuids)
+            except Subcategory.DoesNotExist:
+                print("'''''''''''''''''''''''''''''''''''''")
+                return HTTP_400({"error": "Sub category not found"})
+            try:
+                products = Product.objects.filter(category__in=[sub.category for sub in sub_categories])
+            except Product.DoesNotExist:
+                return HTTP_400({"error": "Products not found"})
+        elif sub_of_sub_uuids:
+            try:
+                sub_of_sub = SubofSub.objects.filter(uuid__in=sub_of_sub_uuids)
+            except SubofSub.DoesNotExist:
+                return HTTP_400({"error": "Sub of sub category not found"})
+            try:
+                products = Product.objects.filter(category__in=[sub.sub_category.category for sub in sub_of_sub])
+            except Product.DoesNotExist:
+                return HTTP_400({"error": "Products not found"})
+        # Serialize the filtered products
+        product_serializer = ProductSerializer(products, many=True)
+        # Return a 200 success response with the filtered products
+        return HTTP_200({"product": product_serializer.data})
+
+
+        
+    
