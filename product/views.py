@@ -1858,15 +1858,17 @@ class ListSubofSubUnderSubCategory(APIView):
 
 
 class ProductsbyMultipleSelection(APIView):
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         # Extract parameters from request body
         category_uuids = request.data.get('category', [])
         sub_category_uuids = request.data.get('sub_category', [])
         print(f"sub_{sub_category_uuids}++++++++++++++++")
         sub_of_sub_uuids = request.data.get('sub_of_sub', [])
+        min_price = request.data.get('min_price',[])
+        max_price = request.data.get('max_price',[])
 
-        if  not category_uuids and not sub_category_uuids and not sub_of_sub_uuids:
-            return HTTP_400({"error": "Sorry! you need to provide list of uuids"})
+        # if  not category_uuids and not sub_category_uuids and not sub_of_sub_uuids:
+        #     return HTTP_400({"error": "Sorry! you need to provide list of uuids"})
         # Fetch products by category UUIDs
         if category_uuids:
             try:
@@ -1897,6 +1899,22 @@ class ProductsbyMultipleSelection(APIView):
                 products = Product.objects.filter(category__in=[sub.sub_category.category for sub in sub_of_sub])
             except Product.DoesNotExist:
                 return HTTP_400({"error": "Products not found"})
+        if min_price and max_price:
+            try:
+                products = products.filter(price__range=(min_price,max_price))
+            except Product.DoesNotExist:
+                return HTTP_400({"error": "Products not found"})
+        if min_price:
+            try:
+                products = products.filter(price__gte=min_price)
+            except Product.DoesNotExist:
+                return HTTP_400({"error": "Products not found"})
+        if max_price:
+                try:
+                    products = products.filter(price__lte=max_price)
+                except Product.DoesNotExist:
+                    return HTTP_400({"error": "Products not found"})
+        
         # Serialize the filtered products
         product_serializer = ProductSerializer(products, many=True)
         # Return a 200 success response with the filtered products
