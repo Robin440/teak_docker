@@ -10,6 +10,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     # "13.201.129.29"
+    "www.teakwoodfactory.com",
     "13.201.129.29",
     "13.211.164.13",
     "localhost",
