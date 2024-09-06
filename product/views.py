@@ -1835,11 +1835,16 @@ class ListSubCategoryUnderCategory(APIView):
         # Check if the category id is provided
         if not kwargs.get("category_id"):
             return HTTP_400({"error": "Sorry! you need to provide category id"})
+
+        products = Product.objects.filter(category=kwargs.get("category_id"))
+        if not products:
+            return HTTP_400({"error": "No products found under this category"})
         
-        sub_category = Subcategory.objects.filter(category=kwargs.get("category_id"))
-        if not sub_category:
+        # Extract unique subcategories from these products
+        subcategories = Subcategory.objects.filter(uuid__in=products.values_list('sub_category', flat=True)).distinct()
+        if not subcategories:
             return HTTP_400({"error": "Sub category not found"})
-        sub_category = SubCategorySerializers(sub_category,many=True)
+        sub_category = SubCategorySerializers(subcategories,many=True)
         return HTTP_200({"sub_category": sub_category.data})
     
 
