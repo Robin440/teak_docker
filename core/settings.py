@@ -22,6 +22,7 @@ ALLOWED_HOSTS = [
     ".vercel.app",
     "6d37-36-255-87-0.ngrok-free.app",
     "stirred-monkfish-luckily.ngrok-free.app",
+    "admin.teakwoodfactory.com"
 ]
 
 
@@ -158,7 +159,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3001",
     "https://6d37-36-255-87-0.ngrok-free.app",
     "https://stirred-monkfish-luckily.ngrok-free.app",
-    "https://admin.teakwoodfactory.com/admin/product/product/"
+    "https://admin.teakwoodfactory.com"
 ]
 
 
@@ -224,3 +225,8 @@ LOGGING = {
         'level': 'DEBUG',  # Sets the root logging level to DEBUG
     },
 }
+
+
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
