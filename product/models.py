@@ -28,7 +28,7 @@ class Subcategory(models.Model):
 
     description = models.TextField(null=True, blank = True)
     image = models.ImageField(upload_to='category_images',null = True, blank = True)
-    category = models.ForeignKey(Category,on_delete=models.SET_NULL,null = True, blank = True)
+    # category = models.ForeignKey(Category,on_delete=models.SET_NULL,null = True, blank = True)
 
     def __str__(self):
         return self.name if self.name else "Unnamed"
@@ -40,7 +40,7 @@ class SubofSub(models.Model):
 
     description = models.TextField(null=True, blank = True)
     image = models.ImageField(upload_to='category_images',null = True, blank = True)
-    sub_category = models.ForeignKey(Subcategory,on_delete=models.SET_NULL,null = True, blank = True)
+    # sub_category = models.ForeignKey(Subcategory,on_delete=models.SET_NULL,null = True, blank = True)
 
     def __str__(self):
         return self.name if self.name else "Unnamed"
@@ -65,6 +65,8 @@ class Product(models.Model):
     status = models.BooleanField(default=True)
 
     category = models.ForeignKey(Category,on_delete=models.SET_NULL,null = True, blank = True)
+    sub_category = models.ForeignKey(Subcategory,on_delete=models.SET_NULL,null = True, blank = True)
+    sub_of_sub = models.ForeignKey(SubofSub,on_delete=models.SET_NULL,null = True, blank = True)
 
     sold_by = models.CharField(max_length=100,default="Teak Wood Factory")
     material = models.CharField(max_length=100,default="Teak")

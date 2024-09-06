@@ -158,6 +158,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3001",
     "https://6d37-36-255-87-0.ngrok-free.app",
     "https://stirred-monkfish-luckily.ngrok-free.app",
+    "https://admin.teakwoodfactory.com/admin/product/product/"
 ]
 
 

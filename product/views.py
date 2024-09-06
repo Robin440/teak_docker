@@ -1884,10 +1884,10 @@ class ProductsbyMultipleSelection(APIView):
                 print("_______________________________________________")
                 sub_categories = Subcategory.objects.filter(uuid__in=sub_category_uuids)
             except Subcategory.DoesNotExist:
-                print("'''''''''''''''''''''''''''''''''''''")
+              
                 return HTTP_400({"error": "Sub category not found"})
             try:
-                products = Product.objects.filter(category__in=[sub.category for sub in sub_categories])
+                products = Product.objects.filter(sub_category__in=sub_categories)
             except Product.DoesNotExist:
                 return HTTP_400({"error": "Products not found"})
         elif sub_of_sub_uuids:
@@ -1896,7 +1896,7 @@ class ProductsbyMultipleSelection(APIView):
             except SubofSub.DoesNotExist:
                 return HTTP_400({"error": "Sub of sub category not found"})
             try:
-                products = Product.objects.filter(category__in=[sub.sub_category.category for sub in sub_of_sub])
+                products = Product.objects.filter(sub_of_sub__in=sub_of_sub)
             except Product.DoesNotExist:
                 return HTTP_400({"error": "Products not found"})
         if min_price and max_price:

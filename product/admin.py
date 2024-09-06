@@ -38,7 +38,7 @@ class SubcategoryAdmin(admin.ModelAdmin):
     """Class for category display customization"""
 
     # add fields to diplay in user interface as list
-    list_display = ("name", "display_image", "description", "category")
+    list_display = ("name", "display_image", "description")
 
     # pagination
     list_per_page = 5
@@ -64,7 +64,7 @@ class SubofSubcategoryAdmin(admin.ModelAdmin):
     """Class for category display customization"""
 
     # add fields to diplay in user interface as list
-    list_display = ("name", "display_image", "description", "sub_category")
+    list_display = ("name", "display_image", "description")
 
     # pagination
     list_per_page = 5
@@ -97,6 +97,7 @@ class ProductAdmin(admin.ModelAdmin):
         "unit",
         "qty",
         "category",
+        "sub_category",
         "is_featured"
     )  # Add 'display_image' to list_display
 
@@ -121,6 +122,8 @@ class ProductAdmin(admin.ModelAdmin):
                     "unit",
                     "qty",
                     "category",
+                    "sub_category",
+                    "sub_of_sub",
                     "sold_by",
                     "material",
                     "brand",
