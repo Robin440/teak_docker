@@ -1702,8 +1702,8 @@ class SearchProductAPI(APIView):
             Q(name__icontains=query)
             | Q(description__icontains=query)
             | Q(category__name__icontains=query)
-            | Q(category__subcategory__name__icontains=query)
-            | Q(category__subcategory__subofsub__name__icontains=query)
+            | Q(sub_category__name__icontains=query)
+            | Q(sub_of_sub__name__icontains=query)
         )
 
         # Serialize the filtered products
